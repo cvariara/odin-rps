@@ -11,6 +11,14 @@
 <body>
   <h1>Rock Paper Scissors</h1>
   <p>First to 5 wins!</p>
+  <div class="scores">
+    <div class="df">
+      <div class="player-score">0</div>
+      <div class="dash">-</div>
+      <div class="computer-score">0</div>
+    </div>
+  </div>
+  <div class="turns"></div>
   <div class="container">
     <div class="move rock" data-move="rock">
       <div class="move-font" data-move="rock">
@@ -31,14 +39,15 @@
       <div class="move-text">Scissors</div>
     </div>
   </div>
-  <div class="scores">
-    <div class="df">
-      <div class="player-score">0</div>
-      <div class="dash">-</div>
-      <div class="computer-score">0</div>
+  <div class="choices">
+    <div class="choice-side">
+      <h2 class="choice-sub">Player</h2>
+      <div class="player-choices"></div>
     </div>
-    <!-- Add winner text here in JS -->
+    <div class="choice-side">
+      <h2 class="choice-sub">Computer</h2>
+      <div class="computer-choices"></div>
+    </div>
   </div>
-  <div class="moves">d</div>
 </body>
 </html>

@@ -3,30 +3,48 @@ const choices = ["Rock", "Paper", "Scissors"];
 let playerScore = 0;
 let computerScore = 0;
 
-const moves = document.querySelectorAll('.move');
-moves.forEach((move) => {
-  move.addEventListener('click', () => getPlayerMove(move))
-})
-
-function getPlayerMove(move) {
-  if (move.classList.contains('rock')) {
-    displayResults(playRound("Rock", getComputerChoice()));
-  } else if (move.classList.contains('paper')) {
-    displayResults(playRound("Paper", getComputerChoice()));
-  } else {
-    displayResults(playRound("Scissors", getComputerChoice()));
-  }
-}
-
 const pScore = document.querySelector('.player-score');
 const cScore = document.querySelector('.computer-score');
 const scores = document.querySelector('.scores');
+const turns = document.querySelector('.turns');
+const playerChoice = document.querySelector('.player-choices');
+const computerChoice = document.querySelector('.computer-choices');
+
+const moves = document.querySelectorAll('.move');
 
 const winner = document.createElement('div');
 winner.classList.add('winner');
 
-function displayResults(message) {
+
+
+moves.forEach((move) => {
+  move.addEventListener('click', handleMoveClick)
+})
+
+function handleMoveClick(event) {
+  getPlayerMove(event.currentTarget);
+}
+
+function getPlayerMove(move) {
+  if (move.classList.contains('rock')) {
+    displayScores(playRound("Rock", getComputerChoice()));
+  } else if (move.classList.contains('paper')) {
+    displayScores(playRound("Paper", getComputerChoice()));
+  } else {
+    displayScores(playRound("Scissors", getComputerChoice()));
+  }
+}
+
+function displayTurn(message) {
+  while (turns.hasChildNodes()) turns.firstChild.remove();
+  const p = document.createElement('p');
+  p.textContent = `${message}`;
+  turns.appendChild(p);
+}
+
+function displayScores(message) {
   console.log(message)
+  displayTurn(message);
   if (message.includes("Win")) {
     playerScore++;
     pScore.textContent = `${playerScore}`;
@@ -37,9 +55,10 @@ function displayResults(message) {
 
   if(checkWin()) {
     console.log('stop game!')
-    scores.appendChild(winner);
+    turns.firstChild.remove();
+    turns.appendChild(winner);
     moves.forEach((move) => {
-      move.removeEventListener('click', () => getPlayerMove(move));
+      move.removeEventListener('click', handleMoveClick);
     })
   }
 }
@@ -64,6 +83,15 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
+  const player = document.createElement('p');
+  const computer = document.createElement('p');
+
+  player.textContent = `${playerSelection}`;
+  computer.textContent = `${computerSelection}`;
+
+  playerChoice.appendChild(player);
+  computerChoice.appendChild(computer);
+
   switch (playerSelection) {
     case "Rock":
       if (computerSelection === "Paper") {
@@ -92,38 +120,3 @@ function playRound(playerSelection, computerSelection) {
   }
   return "It's a tie!";
 }
-
-function game() {
-  // for (let i = 1; i <= 5; i++) {
-  //   console.log("Game: " + i);
-  //   const playerSelection = prompt("What do you choose?: ");
-  //   const computerSelection = getComputerChoice();
-  //   console.log(playRound(playerSelection, computerSelection));
-  //   getScore(playRound(playerSelection, computerSelection));
-  // }
-
-  if (playerScore > computerScore) {
-    alert(
-      "Player wins!\nPlayer Score: " +
-        playerScore +
-        "\nComputer Score: " +
-        computerScore
-    );
-  } else if (playerScore < computerScore) {
-    alert(
-      "Computer wins!\nPlayer Score: " +
-        playerScore +
-        "\nComputer Score: " +
-        computerScore
-    );
-  } else {
-    alert(
-      "Tie game!\nPlayer Score: " +
-        playerScore +
-        "\nComputer Score: " +
-        computerScore
-    );
-  }
-}
-
-// game();

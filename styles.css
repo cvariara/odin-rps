@@ -1,16 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 * {
   background-color: lightgray;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
 }
 
 h1,
-p {
+p,
+.winner {
   text-align: center;
 }
 
-p {
-  margin-bottom: 20px;
+p, 
+.winner {
+  margin: 20px 0;
+}
+
+h1 {
+  font-size: 60px;
 }
 
 i {
@@ -50,4 +59,23 @@ i {
 .df {
   display: flex;
   gap: 12px;
+}
+
+.turns {
+  height: 60px;
+  border: 2px dashed transparent;
+}
+
+.choices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+}
+
+.choice-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 70px;
 }
