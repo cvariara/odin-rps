@@ -5,20 +5,58 @@ let computerScore = 0;
 
 const moves = document.querySelectorAll('.move');
 moves.forEach((move) => {
-  move.addEventListener('click', () => {
-    if (move.classList.contains('rock')) {
-      console.log(playRound("Rock", getComputerChoice()));
-    } else if (move.classList.contains('paper')) {
-      console.log(playRound("Paper", getComputerChoice()));
-    } else {
-      console.log(playRound("Scissors", getComputerChoice()));
-    }
-  })
+  move.addEventListener('click', () => getPlayerMove(move))
 })
 
-// const playerRock = document.querySelector('.rock');
-// const playerPaper = document.querySelector('.paper');
-// const playerScissors = document.querySelector('.scissors');
+function getPlayerMove(move) {
+  if (move.classList.contains('rock')) {
+    displayResults(playRound("Rock", getComputerChoice()));
+  } else if (move.classList.contains('paper')) {
+    displayResults(playRound("Paper", getComputerChoice()));
+  } else {
+    displayResults(playRound("Scissors", getComputerChoice()));
+  }
+}
+
+const pScore = document.querySelector('.player-score');
+const cScore = document.querySelector('.computer-score');
+const scores = document.querySelector('.scores');
+
+const winner = document.createElement('div');
+winner.classList.add('winner');
+
+function displayResults(message) {
+  console.log(message)
+  if (message.includes("Win")) {
+    playerScore++;
+    pScore.textContent = `${playerScore}`;
+  } else if (message.includes("Lose")) {
+    computerScore++;
+    cScore.textContent = `${computerScore}`;
+  }
+
+  if(checkWin()) {
+    console.log('stop game!')
+    scores.appendChild(winner);
+    moves.forEach((move) => {
+      move.removeEventListener('click', () => getPlayerMove(move));
+    })
+  }
+}
+
+function checkWin() {
+  if (playerScore === 5) {
+    console.log("PLAYER WINS!");
+    winner.textContent = 'Winner: Player!';
+    return true;
+  } else if (computerScore === 5) {
+    console.log("COMPUTER WINS!");
+    winner.textContent = 'Winner: Computer!';
+    return true;
+  }
+
+  return false;
+}
 
 function getComputerChoice() {
   const random = Math.floor(Math.random() * choices.length);
@@ -85,17 +123,6 @@ function game() {
         "\nComputer Score: " +
         computerScore
     );
-  }
-}
-
-function getScore(message) {
-  console.log("getScore: " + message);
-  if (message.includes("Win")) {
-    playerScore++;
-    console.log("new player score: " + playerScore);
-  } else if (message.includes("Lose")) {
-    computerScore++;
-    console.log("new computer score: " + computerScore);
   }
 }
 
